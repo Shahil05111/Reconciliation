@@ -6,17 +6,18 @@ import compression from "compression";
 import cors from "cors";
 
 import { container } from "./shared/container";
-
 import { TYPES } from "./shared/constants/types";
 
 import { HealthController } from "./modules/health/health.controller";
-import { correlationIdMiddleware } from "./middlewares/correlation-id.middleware";
 
+import { correlationIdMiddleware } from "./middlewares/correlation-id.middleware";
 import { rateLimiterMiddleware } from "./middlewares/rate-limiter.middleware";
 import { simpleRequestLogger } from "./infrastructure/logging/request-logger.middleware";
-
 import { errorHandler } from "./middlewares/error-handler.middleware";
+
 import { config } from "./config";
+
+import reconciliationRouter from "./modules/reconcilliation/reconciliation.routes";
 
 export class App {
   private readonly app: Application;
@@ -67,6 +68,9 @@ export class App {
       "/tables",
       this.healthController.getTables.bind(this.healthController),
     );
+
+    // Reconciliation endpoints (authorize view mode — read-only SQL)
+    this.app.use("/", reconciliationRouter);
 
     // 404 handler
     this.app.use((req: Request, res: Response) => {

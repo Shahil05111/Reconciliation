@@ -33,6 +33,9 @@ export const TYPES = {
   /** Table metadata repository */
   TableRepository: Symbol.for("TableRepository"),
 
+  /** Reconciliation read-only repository (authorize view mode) */
+  ReconciliationRepository: Symbol.for("ReconciliationRepository"),
+
   /** User repository (if needed) */
   UserRepository: Symbol.for("UserRepository"),
 
@@ -42,6 +45,9 @@ export const TYPES = {
   // ========== SERVICES (BUSINESS LOGIC) ==========
   /** Health check service */
   HealthService: Symbol.for("HealthService"),
+
+  /** Reconciliation service (read-only, authorize view mode) */
+  ReconciliationService: Symbol.for("ReconciliationService"),
 
   /** User service */
   UserService: Symbol.for("UserService"),
@@ -55,6 +61,9 @@ export const TYPES = {
   // ========== CONTROLLERS (HTTP HANDLERS) ==========
   /** Health check controller */
   HealthController: Symbol.for("HealthController"),
+
+  /** Reconciliation controller */
+  ReconciliationController: Symbol.for("ReconciliationController"),
 
   /** User controller */
   UserController: Symbol.for("UserController"),
