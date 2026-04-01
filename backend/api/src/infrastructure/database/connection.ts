@@ -4,11 +4,19 @@ import { databaseConfig } from "../../config/dataabse.config";
 let pool: ConnectionPool | null = null;
 
 export async function getPool(): Promise<ConnectionPool> {
-  if (pool && pool.connected) {
+  try {
+    if (pool && pool.connected) {
+      return pool;
+    }
+
+    pool = await sql.connect(databaseConfig);
+    console.log("✅ DB connected");
+
     return pool;
+  } catch (error) {
+    console.error("❌ DB connection failed:", error);
+    throw error;
   }
-  pool = await sql.connect(databaseConfig);
-  return pool;
 }
 
 export async function closePool(): Promise<void> {
